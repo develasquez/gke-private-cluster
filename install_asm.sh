@@ -40,7 +40,5 @@ export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -
 export SECURE_INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="https")].nodePort}')
 
 gcloud compute firewall-rules create allow-gateway-http --network k8s-vpc --allow "tcp:15017"
-gcloud compute firewall-rules create allow-gateway-https --network k8s-vpc --allow "tcp:9443"
-
-
+gcloud compute firewall-rules create allow-gateway-https --network k8s-vpc--allow "tcp:9443"
 
