@@ -1,24 +1,18 @@
-kpt pkg get \
-  https://github.com/GoogleCloudPlatform/anthos-service-mesh-packages.git/samples/online-boutique \
-  online-boutique
+git clone https://github.com/GoogleCloudPlatform/anthos-service-mesh-samples
+cd anthos-service-mesh-samples/docs/canary-service
 
-cd online-boutique
+kubectl create namespace onlineboutique
 
-kubectl apply -f kubernetes-manifests/namespaces
-kubectl apply -f kubernetes-manifests/deployments
-kubectl apply -f kubernetes-manifests/services
-kubectl apply -f istio-manifests/allow-egress-googleapis.yaml
+kubectl label namespace onlineboutique istio-injection=enabled istio.io/rev-
 
-export REVISION=$(kubectl get deploy -n istio-system -l app=istiod -o   jsonpath={.items[*].metadata.labels.'istio\.io\/rev'}'{"\n"}')
+kubectl apply \
+-n onlineboutique \
+-f https://raw.githubusercontent.com/GoogleCloudPlatform/microservices-demo/main/release/kubernetes-manifests.yaml
 
-for ns in ad cart checkout currency email frontend loadgenerator payment product-catalog recommendation shipping; do
-  kubectl label namespace $ns istio-injection=enabled istio.io/rev-
-done;
+kubectl patch deployments/productcatalogservice -p '{"spec":{"template":{"metadata":{"labels":{"version":"v1"}}}}}' \
+-n onlineboutique
 
-for ns in ad cart checkout currency email frontend loadgenerator \
-  payment product-catalog recommendation shipping; do
-    kubectl rollout restart deployment -n ${ns}
-done;
+kubectl get pods -n onlineboutique
 
 kubectl apply -f istio-manifests/frontend-gateway.yaml
 
