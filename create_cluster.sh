@@ -28,7 +28,7 @@ gcloud services enable \
 
 gcloud container clusters create $CLUSTER_NAME \
 --zone "$REGION-$ZONE" \
---machine-type "n2-standard-4" \
+--machine-type "e2-standard-4" \
 --disk-size "10" \
 --num-nodes "3" \
 --enable-private-nodes \
