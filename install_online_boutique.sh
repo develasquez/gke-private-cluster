@@ -14,5 +14,3 @@ kubectl patch deployments/productcatalogservice -p '{"spec":{"template":{"metada
 
 kubectl get pods -n onlineboutique
 
-kubectl apply -f istio-manifests/frontend-gateway.yaml
-
