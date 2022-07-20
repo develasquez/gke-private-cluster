@@ -12,6 +12,10 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 # GKE Private Cluster Creation
 
+
+
+git clone https://github.com/develasquez/gke-private-cluster.git
+
 ## Execution
 
 To create a private cluster run the next command

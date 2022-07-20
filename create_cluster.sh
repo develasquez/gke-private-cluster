@@ -4,6 +4,7 @@ export PROJECT_ID=$(gcloud config list --format 'value(core.project)')
 export REGION=us-central1
 export ZONE=a
 export SUBNET_RANGE=10.128.0.0/20 
+export CLUSTER_NAME=k8s
 
 gcloud compute networks create k8s-vpc \
 --project=$PROJECT_ID \
@@ -25,7 +26,7 @@ gcloud services enable \
     --project=$PROJECT_ID
 
 
-gcloud container clusters create "k8s" \
+gcloud container clusters create $CLUSTER_NAME \
 --zone "$REGION-$ZONE" \
 --machine-type "n2-standard-4" \
 --disk-size "10" \
@@ -43,7 +44,7 @@ gcloud container clusters create "k8s" \
 
 
 export MY_IP=$(curl ipinfo.io/ip)
-gcloud container clusters update "k8s" \
+gcloud container clusters update $CLUSTER_NAME \
     --enable-master-authorized-networks \
     --master-authorized-networks $MY_IP/32 \
     --zone $REGION-$ZONE
