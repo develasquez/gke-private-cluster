@@ -36,5 +36,11 @@ gcloud container clusters create "k8s" \
 --shielded-secure-boot \
 --shielded-integrity-monitoring
 
+
+export MY_IP=$(curl ipinfo.io/ip)
+gcloud container clusters update "k8s" \
+    --enable-master-authorized-networks \
+    --master-authorized-networks $MY_IP/32 \
+    --zone $REGION-$ZONE
  
 
