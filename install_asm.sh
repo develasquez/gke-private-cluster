@@ -27,6 +27,9 @@ chmod +x asmcli
   --output_dir . \
   --ca mesh_ca
 
+
+
+
 export REVISION=$(kubectl get deploy -n istio-system -l app=istiod -o   jsonpath={.items[*].metadata.labels.'istio\.io\/rev'}'{"\n"}')
 
 kubectl label namespace istio-system istio-injection=enabled istio.io/rev-
@@ -36,8 +39,8 @@ kubectl apply -n istio-system \
 export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
 export SECURE_INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="https")].nodePort}')
 
-gcloud compute firewall-rules create allow-gateway-http --network k8s-vpc --allow "tcp:$INGRESS_PORT"
-gcloud compute firewall-rules create allow-gateway-https --network k8s-vpc--allow "tcp:$SECURE_INGRESS_PORT"
+gcloud compute firewall-rules create allow-gateway-http --network k8s-vpc --allow "tcp:15017"
+gcloud compute firewall-rules create allow-gateway-https --network k8s-vpc--allow "tcp:9443"
 
 
 

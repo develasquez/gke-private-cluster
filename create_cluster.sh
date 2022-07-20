@@ -18,11 +18,16 @@ gcloud compute networks subnets create k8s-subnet \
 --region=$REGION
 
 
-gcloud services enable container.googleapis.com
+gcloud services enable \
+    anthos.googleapis.com \
+    gkehub.googleapis.com \
+    container.googleapis.com \
+    --project=$PROJECT_ID
+
 
 gcloud container clusters create "k8s" \
 --zone "$REGION-$ZONE" \
---machine-type "n2-standard-2" \
+--machine-type "n2-standard-4" \
 --disk-size "10" \
 --num-nodes "3" \
 --enable-private-nodes \
@@ -43,4 +48,11 @@ gcloud container clusters update "k8s" \
     --master-authorized-networks $MY_IP/32 \
     --zone $REGION-$ZONE
  
+gcloud container clusters get-credentials $CLUSTER_NAME \
+    --zone=${REGION}-$ZONE \
+    --project=$PROJECT_ID
 
+gcloud container hub memberships register $CLUSTER_NAME \
+    --gke-cluster ${REGION}-${ZONE}/$CLUSTER_NAME \
+    --enable-workload-identity \
+    --project=$PROJECT_ID
