@@ -11,9 +11,8 @@ kubectl apply -f istio-manifests/allow-egress-googleapis.yaml
 
 export REVISION=$(kubectl get deploy -n istio-system -l app=istiod -o   jsonpath={.items[*].metadata.labels.'istio\.io\/rev'}'{"\n"}')
 
-for ns in ad cart checkout currency email frontend loadgenerator \
-  payment product-catalog recommendation shipping; do
-    kubectl label namespace $ns istio.io/rev=$REVISION --overwrite
+for ns in ad cart checkout currency email frontend loadgenerator payment product-catalog recommendation shipping; do
+  kubectl label namespace $ns istio-injection=enabled istio.io/rev-
 done;
 
 for ns in ad cart checkout currency email frontend loadgenerator \
