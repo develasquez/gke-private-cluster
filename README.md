@@ -21,6 +21,8 @@ git clone https://github.com/develasquez/gke-private-cluster.git
 To create a private cluster run the next command
 
 ´´´sh
-./create_cluster.sh
+./01_create_cluster.sh;
+./02_install_asm.sh;
+./03_install_online_boutique.sh;
 ´´´
 
