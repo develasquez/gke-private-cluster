@@ -25,6 +25,9 @@ chmod +x asmcli
   --cluster_location "$REGION-$ZONE" \
   --enable_all \
   --output_dir . \
+  --managed \
+  --verbose \
+  --channel stable \
   --ca mesh_ca
 
 
