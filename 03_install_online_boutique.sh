@@ -12,5 +12,5 @@ kubectl apply \
 kubectl patch deployments/productcatalogservice -p '{"spec":{"template":{"metadata":{"labels":{"version":"v1"}}}}}' \
 -n onlineboutique
 
-kubectl get pods -n onlineboutique
+kubectl get pods -n onlineboutique -w
 
