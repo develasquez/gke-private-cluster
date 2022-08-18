@@ -44,7 +44,7 @@ spec:
                 - all
             privileged: false
             readOnlyRootFilesystem: true
-          image: gcr.io/qwiklabs-gcp-01-169b0fccaaae/frontend-blue
+          image: frontend
           ports:
           - containerPort: 8080
           readinessProbe:
