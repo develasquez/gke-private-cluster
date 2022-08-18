@@ -1,8 +1,8 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
-namespace: onlineboutique
 metadata:
   name: frontend
+  namespace: onlineboutique
 spec:
   host: frontend
   subsets:
